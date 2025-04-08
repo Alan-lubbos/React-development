@@ -3,14 +3,13 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { getTheme } from './theme/theme';
-import { RootState, store } from './State/Store/store';
+import { store } from './State/Store/store';
 import { useSelector } from 'react-redux';
 import { selectThemeMode } from './State/Selectors/themeSelector';
 
 const ThemedApp = () => {
-  const mode = useSelector(selectThemeMode);  // Use custom selector
+  const mode = useSelector(selectThemeMode);
   const theme = getTheme(mode);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
