@@ -1,5 +1,11 @@
+import ThemeToggle from "../ThemeToggle/themeToggle";
+
 const Home = () => {
-  return <h1>Welcome to Home Page</h1>;
+  return <div>
+    <ThemeToggle/>
+    
+
+  </div>;
 };
 
 export default Home;
