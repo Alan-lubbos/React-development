@@ -5,32 +5,36 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import { Controller } from 'react-hook-form';
 import { RadioField } from '../../FormGenerator/types';
 
 interface Props {
   field: RadioField;
-  value: string;
-  onChange: (name: string, value: string) => void;
+  control: any;
 }
 
-const RadioComponent: React.FC<Props> = ({ field, value, onChange }) => {
+const RadioComponent: React.FC<Props> = ({ field, control }) => {
   return (
     <div>
       <FormLabel component="legend">{field.label}</FormLabel>
-      <RadioGroup
+      <Controller
         name={field.name}
-        value={value || ''}
-        onChange={(e) => onChange(field.name, e.target.value)}
-      >
-        {field.options.map((option) => (
-          <FormControlLabel
-            key={option.value}
-            value={option.value}
-            control={<Radio />}
-            label={option.label}
-          />
-        ))}
-      </RadioGroup>
+        control={control}
+        defaultValue=""
+        rules={field.validation}
+        render={({ field: controllerField }) => (
+          <RadioGroup {...controllerField}>
+            {field.options.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                value={option.value}
+                control={<Radio />}
+                label={option.label}
+              />
+            ))}
+          </RadioGroup>
+        )}
+      />
     </div>
   );
 };

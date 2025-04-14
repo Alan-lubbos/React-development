@@ -1,26 +1,34 @@
 import React from 'react';
 import { TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
 import { TextAreaField } from '../../FormGenerator/types';
 
 interface Props {
   field: TextAreaField;
-  value: any;
-  onChange: (name: string, value: any) => void;
+  control: any;
 }
 
-const TextAreaComponent: React.FC<Props> = ({ field, value, onChange }) => {
+const TextAreaComponent: React.FC<Props> = ({ field, control }) => {
   return (
-    <TextField
-      fullWidth
-      margin="normal"
-      multiline
-      rows={field.rows || 3}
+    <Controller
       name={field.name}
-      label={field.label}
-      placeholder={field.placeholder}
-      required={field.required}
-      value={value || ''}
-      onChange={(e) => onChange(field.name, e.target.value)}
+      control={control}
+      defaultValue=""
+      rules={field.validation}
+      render={({ field: controllerField, fieldState }) => (
+        <TextField
+          fullWidth
+          margin="normal"
+          multiline
+          rows={field.rows || 3}
+          label={field.label}
+          placeholder={field.placeholder}
+          required={field.required}
+          {...controllerField}
+          error={!!fieldState.error}
+          helperText={fieldState.error?.message || field.helperText}
+        />
+      )}
     />
   );
 };

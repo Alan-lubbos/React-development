@@ -1,3 +1,5 @@
+import { RegisterOptions } from 'react-hook-form';
+
 export enum FieldType {
   TEXTFIELD = 'textfield',
   CHECKBOX = 'checkbox',
@@ -5,7 +7,6 @@ export enum FieldType {
   SELECT = 'select',
   SWITCH = 'switch',
   SLIDER = 'slider',
- 
   TEXTAREA = 'textarea',
 }
 
@@ -13,11 +14,16 @@ export interface BaseField {
   name: string;
   label: string;
   required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  helperText?: string;
+  validation?: RegisterOptions;  // Add validation rule here
 }
 
 export interface TextField extends BaseField {
   type: FieldType.TEXTFIELD;
   placeholder?: string;
+  validation?: RegisterOptions;  // Allow additional validation on text field
 }
 
 export interface TextAreaField extends BaseField {
@@ -41,6 +47,7 @@ export interface SelectField extends BaseField {
 }
 
 export interface SwitchField extends BaseField {
+  onChange: (name: string, value: boolean) => void;
   type: FieldType.SWITCH;
 }
 
@@ -51,8 +58,6 @@ export interface SliderField extends BaseField {
   step?: number;
 }
 
-
-
 export type FormField =
   | TextField
   | TextAreaField
@@ -60,4 +65,4 @@ export type FormField =
   | RadioField
   | SelectField
   | SwitchField
-  | SliderField
+  | SliderField;

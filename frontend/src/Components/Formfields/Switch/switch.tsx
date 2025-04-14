@@ -1,23 +1,31 @@
 import React from 'react';
+import { Controller } from 'react-hook-form';
 import { FormControlLabel, Switch as MUISwitch } from '@mui/material';
 import { SwitchField } from '../../FormGenerator/types';
 
 interface Props {
   field: SwitchField;
-  value: boolean;
-  onChange: (name: string, value: boolean) => void;
+  control: any;
 }
 
-const SwitchComponent: React.FC<Props> = ({ field, value, onChange }) => {
+const SwitchComponent: React.FC<Props> = ({ field, control }) => {
   return (
-    <FormControlLabel
-      control={
-        <MUISwitch
-          checked={value || false}
-          onChange={(e) => onChange(field.name, e.target.checked)}
+    <Controller
+      name={field.name}
+      control={control}
+      defaultValue={false}
+      rules={field.validation}
+      render={({ field: controllerField }) => (
+        <FormControlLabel
+          control={
+            <MUISwitch
+              checked={controllerField.value}
+              onChange={(e) => controllerField.onChange(e.target.checked)}
+            />
+          }
+          label={field.label}
         />
-      }
-      label={field.label}
+      )}
     />
   );
 };
